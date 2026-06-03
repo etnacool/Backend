@@ -13,7 +13,6 @@ include '../connectDB.php';
 
 $data = json_decode(file_get_contents("php://input"), true);
 
-// Kontrollo të dhënat e ardhura
 if (!$data || !isset($data['id'])) {
     echo json_encode(["success" => false, "message" => "ID is required"]);
     exit;
@@ -21,7 +20,7 @@ if (!$data || !isset($data['id'])) {
 
 $id = $data['id'];
 
-// Kontrollo që ID është numër
+
 if (!is_numeric($id)) {
     echo json_encode(["success" => false, "message" => "ID must be a number"]);
     exit;
@@ -29,7 +28,6 @@ if (!is_numeric($id)) {
 
 $id = intval($id);
 
-// Përdor prepared statement për siguri
 $stmt = $conn->prepare("DELETE FROM addservice WHERE id = ?");
 $stmt->bind_param("i", $id);
 
